@@ -1,0 +1,51 @@
+*{ Display a question in one of these modes: 'full', 'home' or 'teaser' }*
+ 
+<div class="question ${_as == 'teaser' ? 'teaser' : ''}">
+    <h2 class="question-title">
+        <a href="@{Application.showQuestions(_question.id)}">${_question.title}</a>
+    </h2>
+    <div class="question-metadata">
+        <span class="question-author">by ${_question.author.name}</span>,
+        <span class="question-date">${_question.postedAt.format('dd MMM yy')}</span>
+        #{if _as != 'full'}
+            <span class="question-answers">
+                &nbsp;|&nbsp; ${_question.answers.size() ?: 'no'} 
+                comment${_question.answers.size().pluralize()}
+                #{if _question.answers}
+                    , latest by ${_question.answers[0].author}
+                #{/if}
+            </span>
+        #{/if}
+    </div>
+    #{if _as != 'teaser'}
+        <div class="question-content">
+            <div class="about">Detail: </div>
+            ${_question.content.nl2br()}
+        </div>
+    #{/if}
+</div>
+ 
+#{if _as == 'full'}
+    <div class="answers">
+        <h3>
+            ${_question.answers.size() ?: 'no'} 
+            answer${_question.answers.size().pluralize()}
+        </h3>
+        
+        #{list items:_question.answers, as:'answer'}
+            <div class="answer">
+                <div class="answer-metadata">
+                    <span class="answer-author">by ${answer.author},</span>
+                    <span class="answer-date">
+                        ${answer.postedAt.format('dd MMM yy')}
+                    </span>
+                </div>
+                <div class="answer-content">
+                    <div class="about">Detail: </div>
+                    ${answer.content.escape().nl2br()}
+                </div>
+            </div>
+        #{/list}
+        
+    </div>
+#{/if}

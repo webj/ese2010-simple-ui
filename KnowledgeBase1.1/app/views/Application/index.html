@@ -1,0 +1,24 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+ 
+
+    
+    #{if questions.size()}
+    
+        <div class="questions">
+            
+        
+            #{list items:questions, as:'question'}
+                #{display question:question, as:'teaser' /}
+            #{/list}
+        </div>
+        
+    #{/if}
+    
+
+ 
+#{else}
+    <div class="empty">
+        There is currently nothing to read here.
+    </div>
+#{/else}

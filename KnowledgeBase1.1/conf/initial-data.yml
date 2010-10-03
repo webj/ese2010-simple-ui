@@ -1,0 +1,24 @@
+# Test data
+
+User(bob):    
+    name: Bob
+    password: hallo
+    
+User(brayn):
+    name: Brayn
+    password: velo
+ 
+Question(bobQuestion):
+    author: bob
+    title: What's going on?
+    content: Hey guys, What's going on?
+    postedAt: 2010-10-02
+
+Question(braynQuestion):
+    author: brayn
+    title: Why rise the sun every morning?
+    content: the question is above
+    postedAt: 2010-10-02
+    answers:
+    votes:    
+                    

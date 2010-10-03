@@ -1,0 +1,12 @@
+03 Okt 2010 14:57:55,872 INFO  ~ Starting /home/juerg/ese-workspace/ese2010-warmup/KnowledgeBase1.1
+03 Okt 2010 14:57:56,439 INFO  ~ 
+03 Okt 2010 14:57:56,439 INFO  ~ Go to http://localhost:9000/@tests to run the tests
+03 Okt 2010 14:57:56,439 INFO  ~ 
+03 Okt 2010 14:57:56,439 WARN  ~ You're running Play! in DEV mode
+03 Okt 2010 14:57:56,515 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+03 Okt 2010 14:58:05,509 INFO  ~ Connected to jdbc:hsqldb:mem:playembed
+03 Okt 2010 14:58:05,979 ERROR ~ Unsuccessful: alter table Answer add constraint FK752F2BDEFC06427A foreign key (author) references User
+03 Okt 2010 14:58:05,979 ERROR ~ Column types do not match in statement [alter table Answer add constraint FK752F2BDEFC06427A foreign key (author) references User]
+03 Okt 2010 14:58:05,983 ERROR ~ Unsuccessful: alter table Vote add constraint FK28C70AFC06427A foreign key (author) references User
+03 Okt 2010 14:58:05,983 ERROR ~ Column types do not match in statement [alter table Vote add constraint FK28C70AFC06427A foreign key (author) references User]
+03 Okt 2010 14:58:06,046 INFO  ~ Application 'KnowledgeBase' is now started !
