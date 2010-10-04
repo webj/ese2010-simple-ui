@@ -13,8 +13,7 @@ public class Application extends Controller {
 
 	public static void index() {
 
-		List<Question> questions = Question.find("order by postedAt desc")
-				.fetch();
+		List<Question> questions = Question.find("order by postedAt desc");
 		render(questions);
 	}
 

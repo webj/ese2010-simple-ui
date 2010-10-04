@@ -1,13 +1,9 @@
-import java.util.List;
-
 import models.Answer;
 import models.Question;
 import models.User;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import play.test.Fixtures;
 import play.test.UnitTest;
 
 public class QuestionTest extends UnitTest {
@@ -15,41 +11,53 @@ public class QuestionTest extends UnitTest {
 	@Test
 	public void shouldCreateANewQuestion() {
 
-		User bob = new User("Bob", "hallo", "bob@bob.com").save();
+		User bob = User.createUser("Bob", "bob@bob.com", "hallo");
 
-		Question firstQuestion = new Question(bob, "I have an question",
-				"Why do we write the I in great letters?").save();
+		Question firstQuestion = Question
+				.createQuestion(bob, "I have an question",
+						"Why do we write the I in great letters?");
 
 		assertEquals(1, Question.count());
 		assertEquals("I have an question", firstQuestion.title);
-	}
 
-	@Before
-	public void setup() {
-		Fixtures.deleteAll();
+		bob.delete();
 	}
 
 	@Test
 	public void shouldUseTheRelationAddQuestions() {
 
-		User bob = new User("Bob", "hallo", "bob@bob.com").save();
+		User bob = User.createUser("Bob", "bob@bob.com", "hallo");
+		User brayn = User.createUser("Brayn", "brayn@brayn.com", "velo");
+
+		assertEquals(2, User.count());
 
 		// Test the addAnswer method
-		Question firstQuestion = new Question(bob, "I have an question",
-				"Why do we write the I in great letters?").save();
+		Question firstQuestion = Question
+				.createQuestion(bob, "I have an question",
+						"Why do we write the I in great letters?");
 		firstQuestion.addAnswer(bob,
-				"I know now the answer, the question is sloved").save();
+				"I know now the answer, the question is sloved");
+		firstQuestion.addAnswer(bob, "Answer is good");
+		Question secondQuestion = Question
+				.createQuestion(brayn, "blub", "blub");
 
-		assertEquals(1, Answer.count());
+		assertEquals(2, Answer.count());
 
-		// find the answers from Bob's questions
-		List<Answer> bobAnswer = Answer.find("byQuestion", firstQuestion)
-				.fetch();
-		assertEquals(1, bobAnswer.size());
-
-		Answer answer = bobAnswer.get(0);
-		assertEquals("I know now the answer, the question is sloved",
-				answer.content);
+		bob.delete();
+		assertEquals(1, Question.count());
+		assertEquals(0, Answer.count());
+		brayn.delete();
 	}
 
+	@Test
+	public void shouldCheckTheIDofAQuestion() {
+
+		User bob = User.createUser("Bob", "bob@bob.com", "hallo");
+
+		Question firstQuestion = Question.createQuestion(bob, "bla", "blabla");
+		bob.addQuestion("blabalba", "blabalbaabal");
+
+		assertEquals(0, firstQuestion.id);
+		assertEquals(1, bob.questions.get(1).id);
+	}
 }

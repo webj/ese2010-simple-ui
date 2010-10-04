@@ -4,55 +4,69 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+public class Answer {
 
-import play.data.validation.MaxSize;
-import play.data.validation.Required;
-import play.db.jpa.Model;
-
-@Entity
-public class Answer extends Model {
-
-	@Required
+	public static int id;
+	public static int check;
 	public Date postedAt;
-	
-	@Required
 	public User author;
-
-	@Lob
 	public String content;
+	public static Question question;
+	public static List<Vote> votes;
 
-	@ManyToOne
-	@Required
-    @MaxSize(10000)
-	public Question question;
-
-	@OneToMany(mappedBy = "answer", cascade = { CascadeType.MERGE,
-			CascadeType.REMOVE, CascadeType.REFRESH })
-	List<Vote> votes;
-
-	public Answer(Question question, User author, String content) {
+	private Answer(Question question, User author, String content, boolean check) {
 		this.question = question;
 		this.author = author;
 		this.content = content;
 		this.postedAt = new Date();
-		this.votes = new ArrayList<Vote>();
+		if (check) {
+			this.votes = new ArrayList<Vote>();
+		}
+		this.id = id++;
 		author.addAnswer(this);
 	}
 
+	// factory method
+	public static Answer createAnswer(Question question, User author,
+			String content) {
+
+		if (check == 0) {
+			System.out.println("geht hier vorbei");
+			check++;
+			return new Answer(question, author, content, true);
+		} else
+			return new Answer(question, author, content, false);
+	}
+
 	public Answer addVote(User author, boolean result) {
-		Vote vote = new Vote(this, author, result).save();
+		Vote vote = new Vote(this, author, result);
 		this.votes.add(vote);
-		this.save();
 		return this;
 	}
-	
-	public String toString(){
-		return content;
+
+	public Answer delete() {
+
+		for (Vote vote : this.votes) {
+			User.votes.remove(vote);
+			vote.delete();
+		}
+
+		return this;
+	}
+
+	public static ArrayList<Answer> find(String name) {
+
+		ArrayList<Answer> searchedAnswer = new ArrayList<Answer>();
+		for (Answer answer : Question.answers) {
+			if (answer.author.equals(name)) {
+				searchedAnswer.add(answer);
+			}
+		}
+		return searchedAnswer;
+	}
+
+	public static int count() {
+		return Question.answers.size();
 	}
 
 }

@@ -1,22 +1,14 @@
 package models;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+public class Vote {
 
-import play.db.jpa.Model;
-
-@Entity
-public class Vote extends Model {
-
+	public static int id;
 	public Boolean result;
 
-	@ManyToOne
 	public User author;
 
-	@ManyToOne
 	public Answer answer;
 
-	@ManyToOne
 	public Question question;
 
 	public Vote(Question quesiton, User author, boolean result) {
@@ -25,6 +17,7 @@ public class Vote extends Model {
 		this.author = author;
 		this.result = result;
 		this.author.addVote(this);
+		this.id = id++;
 
 	}
 
@@ -34,6 +27,14 @@ public class Vote extends Model {
 		this.author = author;
 		this.result = result;
 		this.author.addVote(this);
+		this.id = id++;
 	}
 
+	public static int count() {
+		return User.votes.size();
+	}
+
+	public Vote delete() {
+		return null;
+	}
 }
