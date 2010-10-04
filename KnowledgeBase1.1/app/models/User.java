@@ -7,13 +7,21 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import play.data.validation.Email;
+import play.data.validation.Required;
 import play.db.jpa.Model;
 
 @Entity
 public class User extends Model {
 
 	public String name;
+	
+	@Required
 	public String password;
+	
+	@Email
+	@Required
+	public String email;
 
 	@OneToMany(mappedBy = "author", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
@@ -27,13 +35,15 @@ public class User extends Model {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
 
-	public User(String name, String password) {
+	public User(String name, String password, String email) {
 
 		this.name = name;
 		this.password = password;
+		this.email = email;		
 		this.votes = new ArrayList<Vote>();
 		this.questions = new ArrayList<Question>();
 		this.answers = new ArrayList<Answer>();
+		
 	}
 
 	public static User connect(String name, String password) {
@@ -59,5 +69,9 @@ public class User extends Model {
 		this.votes.add(vote);
 		this.save();
 		return this;
+	}
+	
+	public String toString(){
+		return name;
 	}
 }

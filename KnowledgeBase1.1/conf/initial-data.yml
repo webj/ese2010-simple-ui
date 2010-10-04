@@ -3,10 +3,12 @@
 User(bob):    
     name: Bob
     password: hallo
+    email: bob@bob.com
     
 User(brayn):
     name: Brayn
     password: velo
+    email: brayn@brayn.com
  
 Question(bobQuestion):
     author: bob

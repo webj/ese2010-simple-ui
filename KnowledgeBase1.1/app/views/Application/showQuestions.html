@@ -1,22 +1,6 @@
 #{extends 'main.html' /}
 #{set title:question.title/}
 
-<ul id="pagination">
-    #{if question.previous()}
-        <li id="previous">
-            <a href="@{Application.showQuestions(question.previous().id)}">
-                ${question.previous().title}
-            </a>
-        </li>
-    #{/if}
-    #{if question.next()}
-        <li id="next">
-            <a href="@{Application.showQuestions(question.next().id)}">
-                ${question.next().title}
-            </a>
-        </li>
-    #{/if}
-</ul>
 
 #{if flash.success}
  	<p class="success">${flash.success}</p>

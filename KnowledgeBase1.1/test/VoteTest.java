@@ -22,8 +22,8 @@ public class VoteTest extends UnitTest {
 	public void shouldAddAnVoteToAnswer() {
 
 		// Create user
-		User bob = new User("Bob", "hallo").save();
-		User brayn = new User("Brayn", "velo").save();
+		User bob = new User("Bob", "hallo", "bob@bob.com").save();
+		User brayn = new User("Brayn", "velo", "brayn@brayn.com").save();
 
 		// Create questions
 		bob.addQuestion("Whatever", "blabla").save();
@@ -71,8 +71,8 @@ public class VoteTest extends UnitTest {
 	public void shouldAddAnVoteToAQuestion() {
 
 		// Create user
-		User bob = new User("Bob", "hallo").save();
-		User brayn = new User("Brayn", "velo").save();
+		User bob = new User("Bob", "hallo", "bob@bob.com").save();
+		User brayn = new User("Brayn", "velo", "brayn@brayn.com").save();
 
 		// Create questions
 		bob.addQuestion("Whatever", "blabla").save();
@@ -96,8 +96,8 @@ public class VoteTest extends UnitTest {
 	public void shouldDelteteVotes() {
 
 		// Create user
-		User bob = new User("Bob", "hallo").save();
-		User brayn = new User("Brayn", "velo").save();
+		User bob = new User("Bob", "hallo", "bob@bob.com").save();
+		User brayn = new User("Brayn", "velo", "brayn@brayn.com").save();
 
 		// Create questions
 		bob.addQuestion("Whatever", "blabla").save();

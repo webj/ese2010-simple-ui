@@ -16,8 +16,8 @@ public class UserTest extends UnitTest {
 	public void shouldCreateAndRetrieveUser() {
 
 		// Create a new User
-		new User("Bob", "hallo").save();
-		new User("Brayn", "velo").save();
+		new User("Bob", "hallo", "bob@bob.com").save();
+		new User("Brayn", "velo", "brayn@brayn.com").save();
 
 		// Retrieve the user with some keywords
 		User bob = User.find("byPassword", "hallo").first();
@@ -41,15 +41,15 @@ public class UserTest extends UnitTest {
 	@Test
 	public void shouldDeleteUser() {
 
-		User bob = new User("Bob", "hallo").save();
+		User bob = new User("Bob", "hallo", "bob@bob.com").save();
 		bob.delete();
 		assertEquals(0, User.count());
 	}
 
 	@Test
 	public void shouldUseTheQuestionRelation() {
-		User bob = new User("Bob", "hallo").save();
-		User brayn = new User("Brayn", "velo").save();
+		User bob = new User("Bob", "hallo", "bob@bob.com").save();
+		User brayn = new User("Brayn", "velo", "brayn@brayn.com").save();
 
 		bob.addQuestion("What's going on?", "Hey guys, What's going on?")
 				.save();
@@ -77,8 +77,8 @@ public class UserTest extends UnitTest {
 	public void shouldDeleteUserAndEveryDependencies() {
 
 		// create user
-		User bob = new User("Bob", "hallo").save();
-		User brayn = new User("Brayn", "velo").save();
+		User bob = new User("Bob", "hallo", "bob@bob.com").save();
+		User brayn = new User("Brayn", "velo", "brayn@brayn.com").save();
 
 		// create questions
 		bob.addQuestion("What's going on?", "Hey guys, What's going on?")

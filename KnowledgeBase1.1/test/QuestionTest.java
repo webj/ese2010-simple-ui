@@ -15,7 +15,7 @@ public class QuestionTest extends UnitTest {
 	@Test
 	public void shouldCreateANewQuestion() {
 
-		User bob = new User("Bob", "hallo").save();
+		User bob = new User("Bob", "hallo", "bob@bob.com").save();
 
 		Question firstQuestion = new Question(bob, "I have an question",
 				"Why do we write the I in great letters?").save();
@@ -32,7 +32,7 @@ public class QuestionTest extends UnitTest {
 	@Test
 	public void shouldUseTheRelationAddQuestions() {
 
-		User bob = new User("Bob", "hallo").save();
+		User bob = new User("Bob", "hallo", "bob@bob.com").save();
 
 		// Test the addAnswer method
 		Question firstQuestion = new Question(bob, "I have an question",

@@ -35,4 +35,5 @@ public class Vote extends Model {
 		this.result = result;
 		this.author.addVote(this);
 	}
+
 }

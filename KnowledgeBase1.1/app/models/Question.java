@@ -10,18 +10,26 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import play.data.validation.MaxSize;
+import play.data.validation.Required;
 import play.db.jpa.Model;
 
 @Entity
 public class Question extends Model {
 
+	@Required
 	public Date postedAt;
+	
+	@Required
 	public String title;
 
 	@Lob
+	@Required
+    @MaxSize(10000)
 	public String content;
 
-	@ManyToOne
+	@Required
+    @ManyToOne
 	public User author;
 
 	@OneToMany(mappedBy = "question", cascade = { CascadeType.MERGE,
@@ -64,6 +72,10 @@ public class Question extends Model {
 	public Question next() {
 		return Question.find("postedAt > ? order by postedAt asc", postedAt)
 				.first();
+	}
+	
+	public String toString(){
+		return title;
 	}
 
 }
