@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import models.Question;
@@ -13,31 +14,15 @@ public class Application extends Controller {
 
 	public static void index() {
 
-		List<Question> questions = Question.find("order by postedAt desc");
+		ArrayList<Question> questions= new ArrayList<Question>();
+		
+			for(Question question:User.questions){
+				questions.add(question);
+			}
+				
+		
 		render(questions);
 	}
 
-	public static void showQuestions(int id) {
-		Question question = Question.findById(id);
-		render(question);
-	}
-
-	public static void questionAnswer(int questionId, @Required String content) {
-		User bob = User.find("Bob");
-		Question question = Question.findById(questionId);
-		if (validation.hasErrors()) {
-			render("Application/showQuestion.hmtl", question);
-		}
-		question.addAnswer(bob, content);
-		flash.success("Thanks for your answer %s", bob.name);
-		showQuestions(questionId);
-	}
-
-	@Before
-	public static void addDefaults() {
-		renderArgs.put("kBTitle", Play.configuration.getProperty("kB.title"));
-		renderArgs.put("kBBaseline", Play.configuration
-				.getProperty("kB.baseline"));
-	}
-
 }
+

@@ -79,5 +79,18 @@ public class UserTest extends UnitTest {
 		sepp.delete();
 
 	}
+	
+	
+	@Test
+	public void shouldTestUserConnect(){
+		
+		User bob = User.createUser("Bob", "bob@bob.com", "hallo");
+		User brayn = User.createUser("Brayn", "bob@bob.com", "velo");
+		
+		assertEquals(bob, User.connect("Bob", "hallo"));
+		assertNull(User.connect("housi", "hallo"));
+		assertNull(User.connect("Bob", "rüedu"));
+		
+	}
 
 }

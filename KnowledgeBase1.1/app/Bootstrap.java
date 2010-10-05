@@ -7,10 +7,14 @@ import play.test.Fixtures;
 public class Bootstrap extends Job {
 
 	public void doJob() {
-		// Check if the database is empty
-		if (User.count() == 0) {
-			Fixtures.load("initial-data.yml");
+		
+		
+			User bob = User.createUser("bob", "bob@bob.com", "hallo");
+			User brayn = User.createUser("brayn", "brayn@brayn.com", "velo");
+			
+			bob.addQuestion("hallo", "ist hallo mein Password");
+			brayn.addQuestion("velo", "ist velo mein passwort?");
 		}
-	}
+	
 
 }

@@ -124,7 +124,7 @@ public class User {
 
 	public static User connect(String username, String password) {
 		User user = User.find(username);
-		if(password != user.password ){
+		if(user==null || password != user.password ){
 			return null;
 		}
 		else
