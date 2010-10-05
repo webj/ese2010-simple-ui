@@ -1,28 +1,110 @@
 package controllers;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import models.Answer;
 import models.Question;
 import models.User;
-import play.Play;
-import play.data.validation.Required;
-import play.mvc.Before;
 import play.mvc.Controller;
+import play.mvc.With;
 
+@With(Secure.class)
 public class Application extends Controller {
 
-	public static void index() {
+	public static void mainpage() {
 
-		ArrayList<Question> questions= new ArrayList<Question>();
-		
-			for(Question question:User.questions){
-				questions.add(question);
-			}
-				
-		
-		render(questions);
+		ArrayList<Question> renderquestions = Question.sortByVotes();
+
+		render(renderquestions);
 	}
 
-}
+	public static void createQuestion() {
+		render();
+	}
 
+	public static void createAnswer(int id) {
+		render(id);
+	}
+
+	public static void addAnswer(int questionid, String content) {
+
+		String failure;
+
+		if (content.isEmpty()) {
+			failure = "you wrote now answer! Idiot....";
+		}
+
+		else {
+
+			User user = User.find(Security.connected());
+			Question question = Question.findById(questionid);
+			question.addAnswer(user, content);
+			failure = "answer succsesfull created";
+		}
+
+		render(failure);
+
+	}
+
+	public static void addQuestion(String title, String content) {
+
+		String failure;
+
+		if (title.isEmpty() || content.isEmpty()) {
+			failure = "you forgot something";
+		}
+
+		else {
+			User user = User.find(Security.connected());
+			Question.createQuestion(user, title, content);
+			failure = "question succsesfull created";
+		}
+
+		render(failure);
+
+	}
+
+	public static void showQuestion(int id) {
+		Question question = Question.findById(id);
+
+		ArrayList<Answer> answers = Question.findAnswers(id);
+		render(question, answers);
+	}
+
+	public static void voteAnswer(int id, boolean result, int questionid) {
+
+		String failure;
+		User user = User.find(Security.connected());
+		System.out.println(id);
+		Answer answer = Answer.findById(id);
+
+		if (!user.findUserVoteAnswer(answer)) {
+			Question.findById(id).addVote(user, result);
+			failure = "thank's for voting";
+		}
+
+		else {
+			failure = "you already voted this question";
+		}
+
+		render(failure, questionid);
+	}
+
+	public static void voteQuestion(int id, boolean result) {
+
+		String failure;
+		User user = User.find(Security.connected());
+		Question question = Question.findById(id);
+
+		if (!user.findUserVoteQuestion(question)) {
+			Question.findById(id).addVote(user, result);
+			failure = "thank's for voting";
+		}
+
+		else {
+			failure = "you already voted this question";
+		}
+
+		render(failure, id);
+	}
+}

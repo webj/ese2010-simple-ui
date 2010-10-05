@@ -37,15 +37,17 @@ public class QuestionTest extends UnitTest {
 						"Why do we write the I in great letters?");
 		firstQuestion.addAnswer(bob,
 				"I know now the answer, the question is sloved");
-		firstQuestion.addAnswer(bob, "Answer is good");
 		Question secondQuestion = Question
 				.createQuestion(brayn, "blub", "blub");
+		secondQuestion.addAnswer(bob, "Answer is good");
 
 		assertEquals(2, Answer.count());
 
+		assertEquals(1, Question.findAnswers(firstQuestion.id).size());
+
 		bob.delete();
 		assertEquals(1, Question.count());
-		assertEquals(0, Answer.count());
+		assertEquals(1, Answer.count());
 		brayn.delete();
 	}
 

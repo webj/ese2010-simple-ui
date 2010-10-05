@@ -1,4 +1,4 @@
-#{set title:'Home' /}
+#{set title:'createuser' /}
  
 
 <head>
@@ -17,17 +17,16 @@
 		<div id="bodycontainer" style="float:left;width:1000px;">
 			<div id="question list" style="float:left;width:500px;">
 				
-				<h2 style="font-size:100%">a lot of questions</h2>
-					<a style="font-size:100%"; href="#">login to see the questions</a>
+				<h2 style="font-size:100%">fill the formular and get knowledge</h2>
+				
+				#{form @Application.addAnswer(id)}					
+					<p>Your sight:<br><textarea name="content" id="content"/></textarea></p>
+					<p><input type="submit" value="Submit your answer"/>
+				#{/form}
 			</div>
 		
 			<div id="links" style="float:left;width:200px;">
 			
-				<h3>it's your choose<h3>
-				<u1>
-					<li><a href="#">Log in to write something</a></li>
-					<li><a href="/createuser">create new user</a></li>
-				<u1>
 			</div>	
 			
 		</div>

@@ -123,11 +123,57 @@ public class User {
 	}
 
 	public static User connect(String username, String password) {
-		User user = User.find(username);
-		if(user==null || password != user.password ){
-			return null;
+
+		for (User user : User.users) {
+			if (user.name.equals(username) && user.password.equals(password))
+				return user;
+
 		}
-		else
-			return user;
+		return null;
+
+	}
+
+	public static boolean userExists(String name, String email) {
+
+		if (!User.users.isEmpty()) {
+			for (User user : users) {
+
+				if (user.email.equals(email) && user.name.equals(name)) {
+					return true;
+				}
+
+			}
+		}
+		return false;
+	}
+
+	public boolean findUserVoteQuestion(Question question) {
+
+		if (votes.isEmpty()) {
+			return false;
+		} else {
+			for (Vote vote : votes) {
+				if (vote.author.name.equals(this.name)
+						&& vote.question.equals(question)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean findUserVoteAnswer(Answer answer) {
+
+		if (votes.isEmpty()) {
+			return false;
+		} else {
+			for (Vote vote : votes) {
+				if (vote.author.name.equals(this.name)
+						&& vote.answer.equals(answer)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

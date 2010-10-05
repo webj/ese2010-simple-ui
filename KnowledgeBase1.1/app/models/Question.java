@@ -103,4 +103,86 @@ public class Question {
 	public static Question findById(int id) {
 		return User.questions.get(id);
 	}
+
+	public static ArrayList<Answer> findAnswers(int id) {
+		ArrayList<Answer> search = new ArrayList<Answer>();
+		if (!answers.isEmpty()) {
+
+			for (Answer answer : User.answers) {
+				if (answer.question.id == id) {
+					search.add(answer);
+				}
+			}
+			return search;
+		}
+		return null;
+	}
+
+	public int findDislikes() {
+
+		int dislikes = 0;
+
+		if (!votes.isEmpty()) {
+			for (Vote vote : this.votes) {
+				if (!vote.result && vote.question.equals(this)) {
+					dislikes++;
+				}
+			}
+		}
+
+		return dislikes;
+
+	}
+
+	public int findLikes() {
+
+		int like = 0;
+
+		if (!votes.isEmpty()) {
+			for (Vote vote : votes) {
+				if (vote.result && vote.question.equals(this)) {
+					like++;
+				}
+			}
+		}
+
+		return like;
+
+	}
+
+	public static ArrayList<Question> sortByVotes() {
+
+		ArrayList<Question> sortquestions = new ArrayList<Question>();
+		Question compare;
+		int place = 0;
+
+		sortquestions.sort();
+
+		for (Question question : User.questions) {
+			sortquestions.add(question);
+		}
+		for (int i = 0; i < sortquestions.size(); i++) {
+			compare = sortquestions.get(i);
+			for (int n = 0; n < sortquestions.size(); n++) {
+
+				if (compare.findAllVotes() < sortquestions.get(n)
+						.findAllVotes()) {
+					Question change = sortquestions.get(n);
+					sortquestions.add(n, compare);
+					sortquestions.add(place, change);
+					place = n;
+				}
+			}
+
+		}
+
+		return sortquestions;
+
+	}
+
+	private int findAllVotes() {
+
+		return (this.findDislikes() + this.findLikes());
+
+	}
 }

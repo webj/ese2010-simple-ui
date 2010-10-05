@@ -3,9 +3,12 @@
 # ~~~~
 
 # Home page
-GET     /                                       Application.index
-GET		/questions/{id}							Application.showQuestions()
-QUESTION	/questions/{questionId}/answers			Application.postAnswer
+GET     /                                       CreateUser.create
+GET		/mainpage								Application.mainpage
+GET		/mainpage/createquestion				Application.createQuestion
+GET		/mainpage/createquestion/addQuestion	Application.addQuestion
+GET		/mainpage/question/createanswer			Application.createAnswer
+GET		/mainpage/question/{id}					Application.showQuestion
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public

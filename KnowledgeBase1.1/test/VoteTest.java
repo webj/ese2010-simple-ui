@@ -22,6 +22,8 @@ public class VoteTest extends UnitTest {
 
 		assertEquals(2, Vote.count());
 
+		assertEquals(2, question.findDislikes() + question.findLikes());
+
 		bob.delete();
 		assertEquals(0, Vote.count());
 		brayn.delete();

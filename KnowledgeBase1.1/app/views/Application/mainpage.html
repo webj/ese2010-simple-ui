@@ -1,4 +1,4 @@
-#{set title:'Home' /}
+#{set title:'Mainpage' /}
  
 
 <head>
@@ -17,16 +17,21 @@
 		<div id="bodycontainer" style="float:left;width:1000px;">
 			<div id="question list" style="float:left;width:500px;">
 				
-				<h2 style="font-size:100%">a lot of questions</h2>
-					<a style="font-size:100%"; href="#">login to see the questions</a>
+				<h2 style="font-size:150%">a lot of questions (click for details)</h2>
+					#{list items:renderquestions, as:'question'}
+							<span><p>
+								<h2><a href="@{Application.showQuestion(question.id)}">${question.title}</a><h2>
+									<u1>
+										<li style="font-size:50%">${question.findLikes()} people think this is a good question</p></br>
+							</span>
+						#{/list}
 			</div>
 		
 			<div id="links" style="float:left;width:200px;">
 			
-				<h3>it's your choose<h3>
+				<h3>it's your choice<h3>
 				<u1>
-					<li><a href="#">Log in to write something</a></li>
-					<li><a href="/createuser">create new user</a></li>
+					<li><a href="@{Application.createQuestion}">add question</a></li>
 				<u1>
 			</div>	
 			

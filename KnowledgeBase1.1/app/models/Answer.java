@@ -11,7 +11,7 @@ public class Answer {
 	public Date postedAt;
 	public User author;
 	public String content;
-	public static Question question;
+	public Question question;
 	public static List<Vote> votes;
 
 	private Answer(Question question, User author, String content, boolean check) {
@@ -31,7 +31,6 @@ public class Answer {
 			String content) {
 
 		if (check == 0) {
-			System.out.println("geht hier vorbei");
 			check++;
 			return new Answer(question, author, content, true);
 		} else
@@ -69,4 +68,47 @@ public class Answer {
 		return Question.answers.size();
 	}
 
+	public static Answer findById(int id) {
+
+		if (!User.answers.isEmpty()) {
+			for (Answer answer : User.answers) {
+				if (answer.id == id) {
+					return answer;
+				}
+			}
+		}
+		return null;
+	}
+
+	public int findDislikes() {
+
+		int dislikes = 0;
+
+		if (!votes.isEmpty()) {
+			for (Vote vote : this.votes) {
+				if (!vote.result && vote.answer.equals(this)) {
+					dislikes++;
+				}
+			}
+		}
+
+		return dislikes;
+
+	}
+
+	public int findLikes() {
+
+		int like = 0;
+
+		if (!votes.isEmpty()) {
+			for (Vote vote : this.votes) {
+				if (vote.result && vote.answer.equals(this)) {
+					like++;
+				}
+			}
+		}
+
+		return like;
+
+	}
 }
