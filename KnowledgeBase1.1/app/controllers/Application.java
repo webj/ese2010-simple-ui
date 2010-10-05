@@ -17,13 +17,13 @@ public class Application extends Controller {
 		render(questions);
 	}
 
-	public static void showQuestions(Long id) {
+	public static void showQuestions(int id) {
 		Question question = Question.findById(id);
 		render(question);
 	}
 
-	public static void questionAnswer(Long questionId, @Required String content) {
-		User bob = User.find("byName", "Bob").first();
+	public static void questionAnswer(int questionId, @Required String content) {
+		User bob = User.find("Bob");
 		Question question = Question.findById(questionId);
 		if (validation.hasErrors()) {
 			render("Application/showQuestion.hmtl", question);

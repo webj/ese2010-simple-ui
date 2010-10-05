@@ -22,5 +22,5 @@ Question(braynQuestion):
     content: the question is above
     postedAt: 2010-10-02
     answers:
-    votes:    
+    votes:
                     

@@ -99,4 +99,8 @@ public class Question {
 	public static int count() {
 		return User.questions.size();
 	}
+
+	public static Question findById(int id) {
+		return User.questions.get(id);
+	}
 }
