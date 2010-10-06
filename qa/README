@@ -1,0 +1,7 @@
+Ich verwendete zuerst java.jpa mit dem Playframework. Ich musste nun innerhalb eines Abends das ganze Model neu schreiben.
+Das Resultat ist, dass das ganze nicht mehr nach dem feinen Objektorientieten Web programmiert ist. Es hat sehr viel reduntanter Code etc.
+Zum refactoring reicht mir aber die Zeit nicht mehr, da der Abgabetermin in 6 Minuten ist.
+
+Ich denke aber, ich habe das Hauptziel erreicht. Ich verstehe das Playframework einigermassen.
+
+Gruss und viel Spass bei der Korrektur.

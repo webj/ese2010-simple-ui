@@ -1,10 +1,9 @@
 1  Explain how a typical HTTP request is processed with the framework (the request lifecycle)
 
-Dafür gibt es die routes Datei. Diese findet man im conf ordner. Hier können die jeweiligen Pfade angegeben werden
+Normalerweise sind die Pfade wüst. Damit dies schöner aussieht hat play ein Tool.
+Dafür gibt es die routes Datei. Diese findet man im conf ordner. Hier können die jeweiligen Pfade angegeben werden.
 
 2 How could you test user interfaces with the testing facilities in play! framework?
 
-Play nennt diese tests functionale test. Ein solcher Test ruft den Play Action Invoker direkt auf. Wie eine HTTP anfrage.
-Es werden verschiedene Parameter zum testen mitgegeben.
-
-Zudem benötigt es Selenium, das ist ein tool zum Webapplikationen testen.
+Play nennt diese tests functionale test. Ein solcher Test ruft den Play Action Invoker direkt auf. Wie eine HTTP Anfrage.
+Es werden verschiedene Parameter zum testen mitgegeben. Play verwendet dazu Selenium, ein Tool zum Webapplikationen testen.
