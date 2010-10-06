@@ -42,7 +42,7 @@ public class Application extends Controller {
 			failure = "answer succsesfull created";
 		}
 
-		render(failure);
+		render(failure, questionid);
 
 	}
 
@@ -78,9 +78,14 @@ public class Application extends Controller {
 		System.out.println(id);
 		Answer answer = Answer.findById(id);
 
-		if (!user.findUserVoteAnswer(answer)) {
-			Question.findById(id).addVote(user, result);
+		if (!user.findUserVoteAnswer(answer)
+				&& !answer.author.name.equals(Security.connected())) {
+			answer.addVote(user, result);
 			failure = "thank's for voting";
+		}
+
+		else if (answer.author.name.equals(Security.connected())) {
+			failure = "you can't vote your own answer";
 		}
 
 		else {
@@ -96,9 +101,14 @@ public class Application extends Controller {
 		User user = User.find(Security.connected());
 		Question question = Question.findById(id);
 
-		if (!user.findUserVoteQuestion(question)) {
-			Question.findById(id).addVote(user, result);
+		if (!user.findUserVoteQuestion(question)
+				&& !question.author.name.equals(Security.connected())) {
+			question.addVote(user, result);
 			failure = "thank's for voting";
+		}
+
+		else if (question.author.name.equals(Security.connected())) {
+			failure = "you can't vote your own answer";
 		}
 
 		else {

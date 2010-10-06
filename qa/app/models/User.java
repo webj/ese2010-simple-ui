@@ -31,6 +31,14 @@ public class User {
 
 	}
 
+	/**
+	 * factory to crate user
+	 * 
+	 * @param name
+	 * @param email
+	 * @param password
+	 * @return user
+	 */
 	public static User createUser(String name, String email, String password) {
 
 		if (check == 0) {
@@ -65,6 +73,12 @@ public class User {
 		return this;
 	}
 
+	/**
+	 * delete user and all his dependencies
+	 * 
+	 * @return null
+	 */
+
 	public User delete() {
 
 		ArrayList<Question> deletetQuestions = new ArrayList<Question>();
@@ -98,15 +112,12 @@ public class User {
 		return null;
 	}
 
-	public static Question findById(Long id) {
-
-		for (Question question : questions) {
-			if (question.id == id) {
-				return question;
-			}
-		}
-		return null;
-	}
+	/**
+	 * find user by name
+	 * 
+	 * @param name
+	 * @return user
+	 */
 
 	public static User find(String name) {
 
@@ -122,6 +133,16 @@ public class User {
 		return users.size();
 	}
 
+	/**
+	 * check if an user is connectet.
+	 * 
+	 * This method is necessary for the login.
+	 * 
+	 * @param username
+	 * @param password
+	 * @return user
+	 */
+
 	public static User connect(String username, String password) {
 
 		for (User user : User.users) {
@@ -132,6 +153,14 @@ public class User {
 		return null;
 
 	}
+
+	/**
+	 * check if an user exists.
+	 * 
+	 * @param name
+	 * @param email
+	 * @return boolean
+	 */
 
 	public static boolean userExists(String name, String email) {
 
@@ -147,20 +176,36 @@ public class User {
 		return false;
 	}
 
+	/**
+	 * check if an user has alredy voted for an question.
+	 * 
+	 * 
+	 * @param question
+	 * @return boolean
+	 */
+
 	public boolean findUserVoteQuestion(Question question) {
 
 		if (votes.isEmpty()) {
 			return false;
 		} else {
 			for (Vote vote : votes) {
-				if (vote.author.name.equals(this.name)
+				if (vote.checkKind == 1 && vote.author.name.equals(this.name)
 						&& vote.question.equals(question)) {
 					return true;
 				}
 			}
 		}
+
 		return false;
 	}
+
+	/**
+	 * check if an user has already voted for an answer.
+	 * 
+	 * @param answer
+	 * @return boolean
+	 */
 
 	public boolean findUserVoteAnswer(Answer answer) {
 
@@ -168,7 +213,8 @@ public class User {
 			return false;
 		} else {
 			for (Vote vote : votes) {
-				if (vote.author.name.equals(this.name)
+
+				if (vote.checkKind == 0 && vote.author.name.equals(this.name)
 						&& vote.answer.equals(answer)) {
 					return true;
 				}

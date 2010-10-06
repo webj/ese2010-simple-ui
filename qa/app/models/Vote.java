@@ -3,6 +3,9 @@ package models;
 public class Vote {
 
 	public static int id;
+
+	// check if answer or question
+	public int checkKind;
 	public Boolean result;
 
 	public User author;
@@ -17,6 +20,7 @@ public class Vote {
 		this.author = author;
 		this.result = result;
 		this.author.addVote(this);
+		this.checkKind = 1;
 		this.id = id++;
 
 	}
@@ -27,6 +31,7 @@ public class Vote {
 		this.author = author;
 		this.result = result;
 		this.author.addVote(this);
+		this.checkKind = 0;
 		this.id = id++;
 	}
 

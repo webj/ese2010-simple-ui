@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Answer {
 
-	public static int id;
+	public int id;
 	public static int check;
 	public Date postedAt;
 	public User author;
@@ -22,8 +22,17 @@ public class Answer {
 		if (check) {
 			this.votes = new ArrayList<Vote>();
 		}
-		this.id = id++;
+		createId();
 		author.addAnswer(this);
+	}
+
+	private void createId() {
+		if (id == 0 || Answer.count() == 0) {
+			this.id = Answer.count();
+
+		} else {
+			id = User.answers.get(User.answers.size() - 1).id + 1;
+		}
 	}
 
 	// factory method
@@ -53,11 +62,17 @@ public class Answer {
 		return this;
 	}
 
+	/**
+	 *find all answers by given author-name
+	 * 
+	 * @param name
+	 * @return answers
+	 */
 	public static ArrayList<Answer> find(String name) {
 
 		ArrayList<Answer> searchedAnswer = new ArrayList<Answer>();
 		for (Answer answer : Question.answers) {
-			if (answer.author.equals(name)) {
+			if (answer.author.name.equals(name)) {
 				searchedAnswer.add(answer);
 			}
 		}
@@ -67,6 +82,13 @@ public class Answer {
 	public static int count() {
 		return Question.answers.size();
 	}
+
+	/**
+	 * find answer by given id
+	 * 
+	 * @param id
+	 * @return answer
+	 */
 
 	public static Answer findById(int id) {
 
@@ -79,6 +101,12 @@ public class Answer {
 		}
 		return null;
 	}
+
+	/**
+	 * finds all dislikes of an answer
+	 * 
+	 * @return number of dislike votes
+	 */
 
 	public int findDislikes() {
 
@@ -96,6 +124,11 @@ public class Answer {
 
 	}
 
+	/**
+	 * finds all likes of an answer
+	 * 
+	 * @return number of like votes
+	 */
 	public int findLikes() {
 
 		int like = 0;

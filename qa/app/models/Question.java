@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import edu.emory.mathcs.backport.java.util.Collections;
+
 public class Question {
 
 	public int id;
@@ -62,6 +64,12 @@ public class Question {
 		return this;
 	}
 
+	/**
+	 * delete question and all dependencies
+	 * 
+	 * @return deleted question
+	 */
+
 	public Question delete() {
 
 		ArrayList<Answer> deletetAnswer = new ArrayList<Answer>();
@@ -85,6 +93,13 @@ public class Question {
 		return this;
 	}
 
+	/**
+	 * finds all question from an author
+	 * 
+	 * @param name
+	 * @return questions
+	 */
+
 	public static ArrayList<Question> find(String name) {
 
 		ArrayList<Question> searchedQuestion = new ArrayList<Question>();
@@ -100,10 +115,23 @@ public class Question {
 		return User.questions.size();
 	}
 
+	/**
+	 * Finds question by give id
+	 * 
+	 * @param id
+	 * @return question
+	 */
+
 	public static Question findById(int id) {
 		return User.questions.get(id);
 	}
 
+	/**
+	 * Finds all answers from a question
+	 * 
+	 * @param id
+	 * @return array of answers
+	 */
 	public static ArrayList<Answer> findAnswers(int id) {
 		ArrayList<Answer> search = new ArrayList<Answer>();
 		if (!answers.isEmpty()) {
@@ -117,6 +145,12 @@ public class Question {
 		}
 		return null;
 	}
+
+	/**
+	 * finds all dislikes of an question
+	 * 
+	 * @return all dislikes
+	 */
 
 	public int findDislikes() {
 
@@ -134,6 +168,12 @@ public class Question {
 
 	}
 
+	/**
+	 * finds all likes of a question
+	 * 
+	 * @return all likes of a question
+	 */
+
 	public int findLikes() {
 
 		int like = 0;
@@ -150,43 +190,25 @@ public class Question {
 
 	}
 
+	/**
+	 * created a array sortet by question likes
+	 * 
+	 * @return sorted array
+	 */
+
 	public static ArrayList<Question> sortByVotes() {
 
-		ArrayList<Question> sortquestions = new ArrayList<Question>();
-		Question compare;
-		int place = 0;
+		ArrayList<Question> tosortquestions = new ArrayList<Question>();
 
 		for (Question question : User.questions) {
-			sortquestions.add(question);
-		}
-		if (sortquestions.size() <= 1) {
-			return sortquestions;
+			tosortquestions.add(question);
 		}
 
-		else {
-			int j;
+		QuestionVoteScoreComparator comp = new QuestionVoteScoreComparator();
 
-			for (int i = 1; i < sortquestions.size(); i++) {
-				j = i;
-				compare = sortquestions.get(j);
-
-				while (j > 0
-						&& sortquestions.get(j - 1).findAllVotes() < compare
-								.findAllVotes()) {
-					sortquestions.add(j, sortquestions.get(j - 1));
-					j--;
-				}
-				sortquestions.add(j, compare);
-			}
-
-			return sortquestions;
-		}
+		Collections.sort(tosortquestions, comp);
+		return tosortquestions;
 
 	}
 
-	private int findAllVotes() {
-
-		return (this.findDislikes() + this.findLikes());
-
-	}
 }

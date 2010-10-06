@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+
+import models.Answer;
 import models.Question;
 import models.User;
 import models.Vote;
@@ -20,8 +23,13 @@ public class VoteTest extends UnitTest {
 		question.addVote(bob, false);
 		question.addVote(brayn, true);
 
-		assertEquals(2, Vote.count());
+		question.addAnswer(brayn, "good question");
 
+		ArrayList<Answer> answer = Question.findAnswers(0);
+		answer.get(0).addVote(bob, true);
+
+		assertEquals(3, Vote.count());
+		assertEquals(1, answer.get(0).findLikes());
 		assertEquals(2, question.findDislikes() + question.findLikes());
 
 		bob.delete();

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+import models.Answer;
 import models.Question;
 import models.User;
 
@@ -79,18 +80,68 @@ public class UserTest extends UnitTest {
 		sepp.delete();
 
 	}
-	
-	
+
 	@Test
-	public void shouldTestUserConnect(){
-		
+	public void shouldTestUserConnect() {
+
 		User bob = User.createUser("Bob", "bob@bob.com", "hallo");
 		User brayn = User.createUser("Brayn", "bob@bob.com", "velo");
-		
+
 		assertEquals(bob, User.connect("Bob", "hallo"));
 		assertNull(User.connect("housi", "hallo"));
 		assertNull(User.connect("Bob", "rüedu"));
-		
+
+		bob.delete();
+		brayn.delete();
+
+	}
+
+	@Test
+	public void shouldTestIfAnUserAlreadyVotedForAnQuestion() {
+
+		User bob = User.createUser("Bob", "bob@bob.com", "hallo");
+		User brayn = User.createUser("Brayn", "bob@bob.com", "velo");
+
+		bob.addQuestion("none", "bla");
+
+		Question question = Question.findById(0);
+
+		assertEquals(false, bob.findUserVoteQuestion(question));
+		question.addVote(bob, true);
+		assertEquals(true, bob.findUserVoteQuestion(question));
+
+		// clear the database
+		bob.delete();
+		brayn.delete();
+	}
+
+	@Test
+	public void shouldTestIfAnUserAlreadyVotedForAnAnswer() {
+
+		User bob = User.createUser("Bob", "bob@bob.com", "hallo");
+		User brayn = User.createUser("Brayn", "bob@bob.com", "velo");
+
+		bob.addQuestion("none", "bla");
+		Question question = Question.findById(0);
+		question.addAnswer(bob, "balbalb");
+		Answer answer = Answer.findById(0);
+
+		assertEquals(false, bob.findUserVoteAnswer(answer));
+		answer.addVote(bob, true);
+		assertEquals(true, bob.findUserVoteAnswer(answer));
+
+		// clear the database
+		bob.delete();
+		brayn.delete();
+	}
+
+	@Test
+	public void shouldTestUserSize() {
+
+		User bob = User.createUser("Bob", "bob@bob.com", "hallo");
+		User brayn = User.createUser("Brayn", "bob@bob.com", "velo");
+
+		assertEquals(2, User.count());
 	}
 
 }
