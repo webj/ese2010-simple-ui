@@ -156,27 +156,31 @@ public class Question {
 		Question compare;
 		int place = 0;
 
-		sortquestions.sort();
-
 		for (Question question : User.questions) {
 			sortquestions.add(question);
 		}
-		for (int i = 0; i < sortquestions.size(); i++) {
-			compare = sortquestions.get(i);
-			for (int n = 0; n < sortquestions.size(); n++) {
-
-				if (compare.findAllVotes() < sortquestions.get(n)
-						.findAllVotes()) {
-					Question change = sortquestions.get(n);
-					sortquestions.add(n, compare);
-					sortquestions.add(place, change);
-					place = n;
-				}
-			}
-
+		if (sortquestions.size() <= 1) {
+			return sortquestions;
 		}
 
-		return sortquestions;
+		else {
+			int j;
+
+			for (int i = 1; i < sortquestions.size(); i++) {
+				j = i;
+				compare = sortquestions.get(j);
+
+				while (j > 0
+						&& sortquestions.get(j - 1).findAllVotes() < compare
+								.findAllVotes()) {
+					sortquestions.add(j, sortquestions.get(j - 1));
+					j--;
+				}
+				sortquestions.add(j, compare);
+			}
+
+			return sortquestions;
+		}
 
 	}
 
